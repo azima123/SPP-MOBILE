@@ -5,11 +5,25 @@ import '../AppException.dart';
 import 'BaseApiService.dart';
 
 class NetworkApiService extends BaseApiService {
+  //For Request GET
   @override
   Future getResponse(String url) async {
     dynamic responseJson;
     try {
       final response = await http.get(Uri.parse(baseUrl + url));
+      responseJson = returnResponse(response);
+    } on SocketException {
+      throw FetchDataException('No Internet Connection');
+    }
+    return responseJson;
+  }
+
+//For Request POST
+  @override
+  Future postResponse(String url, data) async {
+    dynamic responseJson;
+    try {
+      final response = await http.post(Uri.parse(baseUrl + url), body: data);
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet Connection');

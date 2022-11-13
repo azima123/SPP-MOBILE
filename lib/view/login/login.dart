@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:spp/data/remote/response/Status.dart';
+import 'package:spp/view/home/home.dart';
 import 'package:spp/view_model/login/LoginVM.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -13,11 +15,18 @@ class login extends StatefulWidget {
 enum LoginStatus { notSignIn, signIn }
 
 class _loginstate extends State<login> {
+  @override
+  initState() {
+    checksession();
+    super.initState();
+  }
+
   bool? isChecked = false;
   LoginStatus _loginStatus = LoginStatus.notSignIn;
   String? email, password;
   final _key = new GlobalKey<FormState>();
   final LoginVM viewModel = LoginVM();
+
   check() {
     final form = _key.currentState;
     if (form!.validate()) {
@@ -27,18 +36,21 @@ class _loginstate extends State<login> {
   }
 
   login() async {
-    viewModel.actlogin("email", "password");
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(viewModel.login.status.toString()),
-    ));
-    ;
+    await viewModel.actlogin(email!, password!);
+    switch (viewModel.login.status) {
+      case Status.COMPLETED:
+        savepref(viewModel.login.data!.data!.id);
+
+        break;
+      default:
+        break;
+    }
   }
 
-  savepref(datas) {
-    datas['id'];
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Sending Message"),
-    ));
+  savepref(int? id) async {
+    await SessionManager()
+        .set("id", id)
+        .then((value) => {Navigator.pushNamed(context, "home")});
   }
 
   Widget _buildTextField({
@@ -328,5 +340,17 @@ class _loginstate extends State<login> {
         ),
       ),
     );
+  }
+
+  Future<void> checksession() async {
+    dynamic id = await SessionManager().get("id");
+    if (id != null) {
+      Navigator.pushReplacement<void, void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => home(),
+        ),
+      );
+    }
   }
 }

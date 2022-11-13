@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:spp/res/theme/colors/light_colors.dart';
 
 import 'package:spp/view/home/home.dart';
@@ -12,13 +13,11 @@ void main() {
     systemNavigationBarColor: LightColors.Blue, // navigation bar color
     statusBarColor: LightColors.Blue, // status bar color
   ));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
+  MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,11 +36,25 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
-        routes: {
-          '/': (context) => login(),
-          'home': (context) => home(),
-          'monitoringspp': (context) => spp(),
-          'monitoringhealth': (context) => health()
-        });
+        routes: classroute());
+  }
+}
+
+classroute() {
+  Map<String, Widget Function(BuildContext)> dataroute;
+  dynamic id = SessionManager().get("id");
+  if (id != null) {
+    return dataroute = {
+      '/': (context) => home(),
+      'monitoringspp': (context) => spp(),
+      'monitoringhealth': (context) => health()
+    };
+  } else {
+    return dataroute = {
+      '/': (context) => login(),
+      'home': (context) => home(),
+      'monitoringspp': (context) => spp(),
+      'monitoringhealth': (context) => health()
+    };
   }
 }

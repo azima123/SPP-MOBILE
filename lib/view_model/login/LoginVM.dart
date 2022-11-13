@@ -17,8 +17,15 @@ class LoginVM extends ChangeNotifier {
 
   //Login Data
   Future<void> actlogin(String email, String password) async {
-    _setMain(ApiResponse.loading());
     _myRepo.LoginPost(email, password)
+        .then((value) => _setMain(ApiResponse.completed(value)))
+        .onError((error, stackTrace) =>
+            _setMain(ApiResponse.error(error.toString())));
+  }
+
+  //getaccount by login
+  Future<void> DetailAccount(String id) async {
+    _myRepo.DetailAccount(id)
         .then((value) => _setMain(ApiResponse.completed(value)))
         .onError((error, stackTrace) =>
             _setMain(ApiResponse.error(error.toString())));
