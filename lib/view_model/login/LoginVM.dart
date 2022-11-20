@@ -30,4 +30,12 @@ class LoginVM extends ChangeNotifier {
         .onError((error, stackTrace) =>
             _setMain(ApiResponse.error(error.toString())));
   }
+
+  //Update Account
+  Future<void> UpdateAccount(Map<String, String> data) async {
+    _myRepo.UpdateAccount(data)
+        .then((value) => _setMain(ApiResponse.completed(value)))
+        .onError((error, stackTrace) =>
+            _setMain(ApiResponse.error(error.toString())));
+  }
 }

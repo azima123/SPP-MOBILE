@@ -8,13 +8,16 @@ class TaskColumn extends StatelessWidget {
   final String subtitle;
   final String url;
   final String jenis;
+  final Widget widget;
   TaskColumn(
       {required this.icon,
       required this.iconBackgroundColor,
       required this.title,
       required this.subtitle,
       required this.jenis,
-      required this.url});
+      required this.url,
+      required this.widget});
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -45,13 +48,20 @@ class TaskColumn extends StatelessWidget {
                     color: Colors.black45),
               ),
             ],
-          )
+          ),
         ],
       ),
       onTap: () {
         if (jenis == 'url') {
           _launchUrl(Uri.parse(url));
-        } else {}
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => widget,
+            ),
+          );
+        }
       },
     );
   }

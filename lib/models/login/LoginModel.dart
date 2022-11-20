@@ -35,6 +35,7 @@ class Data {
   String? nohp;
   String? alamat;
   String? email;
+  String? foto;
   int? idSekolah;
   String? password;
   String? createdAt;
@@ -47,6 +48,7 @@ class Data {
       required this.nohp,
       required this.alamat,
       required this.email,
+      required this.foto,
       required this.idSekolah,
       required this.password,
       required this.createdAt,
@@ -59,6 +61,7 @@ class Data {
     nohp = json['nohp'];
     alamat = json['alamat'];
     email = json['email'];
+    foto = json['foto'];
     idSekolah = json['id_sekolah'];
     password = json['password'];
     createdAt = json['created_at'];
@@ -73,6 +76,7 @@ class Data {
     data['nohp'] = this.nohp;
     data['alamat'] = this.alamat;
     data['email'] = this.email;
+    data['foto'] = this.foto;
     data['id_sekolah'] = this.idSekolah;
     data['password'] = this.password;
     data['created_at'] = this.createdAt;
@@ -92,6 +96,7 @@ class Anak {
   String? namaIbu;
   String? foto;
   String? alamat;
+  String? kelas;
   int? idSekolahsiswa;
   int? idtahunmasuksiswa;
   String? statussiswa;
@@ -108,6 +113,7 @@ class Anak {
       required this.namaIbu,
       required this.foto,
       required this.alamat,
+      required this.kelas,
       required this.idSekolahsiswa,
       required this.idtahunmasuksiswa,
       required this.statussiswa,
@@ -124,6 +130,7 @@ class Anak {
     namaIbu = json['nama_ibu'];
     foto = json['foto'];
     alamat = json['alamat'];
+    kelas = json['kelas'];
     idSekolahsiswa = json['id_sekolahsiswa'];
     idtahunmasuksiswa = json['idtahunmasuksiswa'];
     statussiswa = json['statussiswa'];
@@ -142,6 +149,7 @@ class Anak {
     data['nama_ibu'] = this.namaIbu;
     data['foto'] = this.foto;
     data['alamat'] = this.alamat;
+    data['kelas'] = this.kelas;
     data['id_sekolahsiswa'] = this.idSekolahsiswa;
     data['idtahunmasuksiswa'] = this.idtahunmasuksiswa;
     data['statussiswa'] = this.statussiswa;

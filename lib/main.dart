@@ -36,25 +36,11 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
-        routes: classroute());
-  }
-}
-
-classroute() {
-  Map<String, Widget Function(BuildContext)> dataroute;
-  dynamic id = SessionManager().get("id");
-  if (id != null) {
-    return dataroute = {
-      '/': (context) => home(),
-      'monitoringspp': (context) => spp(),
-      'monitoringhealth': (context) => health()
-    };
-  } else {
-    return dataroute = {
-      '/': (context) => login(),
-      'home': (context) => home(),
-      'monitoringspp': (context) => spp(),
-      'monitoringhealth': (context) => health()
-    };
+        routes: {
+          '/': (context) => home(),
+          'login': (context) => home(),
+          'monitoringspp': (context) => spp(),
+          'monitoringhealth': (context) => health()
+        });
   }
 }

@@ -5,6 +5,10 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:spp/models/login/LoginModel.dart';
 import 'package:spp/res/theme/colors/light_colors.dart';
 import 'package:spp/res/widgets/top_container.dart';
+import 'package:spp/view/login/login.dart';
+import 'package:spp/view/monitoring/health.dart';
+import 'package:spp/view/monitoring/spp.dart';
+import 'package:spp/view/pengaturan/pengaturan.dart';
 
 import '../../data/remote/response/Status.dart';
 import '../../res/widgets/active_project_card.dart';
@@ -12,6 +16,7 @@ import '../../res/widgets/task_column.dart';
 import '../../view_model/login/LoginVM.dart';
 import 'package:provider/provider.dart';
 
+import '../monitoring/hafalan.dart';
 import '../widget/LoadingWidget.dart';
 import '../widget/MyErrorWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -36,7 +41,50 @@ class _home extends State<home> {
 
   getdata() async {
     dynamic id = await SessionManager().get("id");
-    await viewModel.DetailAccount(id.toString());
+    if (id != null) {
+      await viewModel.DetailAccount(id.toString());
+    } else {
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (BuildContext context) => login()));
+    }
+  }
+
+  Future<void> _dialoglogout(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Apakah anda yakin akan keluar Aplikasi ?'),
+          content: const Text(
+              'Jika iya tekan YA jika tidak tekan TIDAK, Jika Logout anda harus login kembali jika akan menggunakan Aplikasi'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Tidak'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Ya'),
+              onPressed: () async {
+                await SessionManager().remove("id").then((value) =>
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => login()),
+                        ModalRoute.withName('/')));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Text subheading(String title) {
@@ -50,14 +98,24 @@ class _home extends State<home> {
     );
   }
 
-  static CircleAvatar calendarIcon() {
-    return CircleAvatar(
-      radius: 25.0,
-      backgroundColor: LightColors.kGreen,
-      child: Icon(
-        Icons.calendar_today,
-        size: 20.0,
-        color: Colors.white,
+  GestureDetector calendarIcon() {
+    return GestureDetector(
+      onTap: () async {
+        await Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => pengaturan(),
+          ),
+        ).whenComplete(() => {getdata()});
+      },
+      child: CircleAvatar(
+        radius: 25.0,
+        backgroundColor: Colors.amber,
+        child: Icon(
+          Icons.settings,
+          size: 20.0,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -66,6 +124,18 @@ class _home extends State<home> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              _dialoglogout(context);
+            },
+          )
+        ],
+        backgroundColor: LightColors.Blue,
+        title: Text("Kontrol Anak"),
+      ),
       backgroundColor: Colors.white,
       body: ChangeNotifierProvider<LoginVM>(
         create: (BuildContext context) => viewModel,
@@ -114,9 +184,9 @@ class _home extends State<home> {
                           center: CircleAvatar(
                             backgroundColor: LightColors.kBlue,
                             radius: 35.0,
-                            backgroundImage: AssetImage(
-                              'assets/images/avatar.png',
-                            ),
+                            backgroundImage: NetworkImage(
+                                "https://spp.kanalapps.web.id/public/images/wali/" +
+                                    data.foto!),
                           ),
                         ),
                         Column(
@@ -172,19 +242,21 @@ class _home extends State<home> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 15.0),
+                        /*SizedBox(height: 15.0),
                         TaskColumn(
-                          jenis: 'route',
+                          widget: home(),
+                          jenis: 'url',
                           url: '',
                           icon: Icons.person,
                           iconBackgroundColor: LightColors.kRed,
                           title: 'Total Santri',
                           subtitle: 'Total Santri Aktif',
-                        ),
+                        ),*/
                         SizedBox(
                           height: 15.0,
                         ),
                         TaskColumn(
+                          widget: home(),
                           jenis: "url",
                           url:
                               'https://www.google.com/maps/search/?api=1&query=1.5058823,102.0624475',
@@ -195,12 +267,13 @@ class _home extends State<home> {
                         ),
                         SizedBox(height: 15.0),
                         TaskColumn(
+                          widget: hafalan(anak: viewModel.login.data!.anak),
                           jenis: 'route',
                           url: '',
                           icon: Icons.announcement,
                           iconBackgroundColor: LightColors.kBlue,
-                          title: 'Pengumuman',
-                          subtitle: 'Pengumuman Bequranic',
+                          title: 'Hafalan Anak',
+                          subtitle: 'Yuk Pantau Hafalan Anak Anda',
                         ),
                       ],
                     ),
@@ -218,8 +291,13 @@ class _home extends State<home> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             GestureDetector(
-                                onTap: () => Navigator.pushNamed(
-                                    context, 'monitoringspp'),
+                                onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => spp(
+                                            anak: viewModel.login.data!.anak),
+                                      ),
+                                    ),
                                 child: Container(
                                     width: 160,
                                     child: ActiveProjectsCard(
@@ -232,8 +310,13 @@ class _home extends State<home> {
                                     ))),
                             SizedBox(width: 20.0),
                             GestureDetector(
-                                onTap: () => Navigator.pushNamed(
-                                    context, 'monitoringhealth'),
+                                onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => health(
+                                            anak: viewModel.login.data!.anak),
+                                      ),
+                                    ),
                                 child: Container(
                                     width: 160,
                                     child: ActiveProjectsCard(

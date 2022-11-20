@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:spp/models/login/LoginModel.dart';
 import 'package:spp/repository/login/LoginRepo.dart';
 
@@ -25,12 +27,6 @@ class LoginRepolpm implements LoginRepo {
   }
 
   @override
-  Future<LoginModel?> Logout() {
-    // TODO: implement Logout
-    throw UnimplementedError();
-  }
-
-  @override
   Future<LoginModel?> DetailAccount(id) async {
     try {
       Map<String, String> data = {"id": id};
@@ -46,5 +42,17 @@ class LoginRepolpm implements LoginRepo {
     throw UnimplementedError();
   }
 
-
+  @override
+  Future<LoginModel?> UpdateAccount(Map<String, String> array) async {
+    try {
+      Map<String, String> data = array;
+      dynamic response =
+          await _apiService.postResponse(ApiEndPoints().updateaccount, data);
+      //print("$response");
+      final jsonData = LoginModel.fromJson(response);
+      return jsonData;
+    } catch (e) {
+      throw e;
+    }
+  }
 }

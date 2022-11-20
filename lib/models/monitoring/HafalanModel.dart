@@ -1,15 +1,15 @@
-class KesehatanModel {
+class HafalanModel {
   String? message;
-  List<Datakesehatan>? data;
+  List<Datahafalan>? data;
 
-  KesehatanModel({required this.message, required this.data});
+  HafalanModel({required this.message, required this.data});
 
-  KesehatanModel.fromJson(Map<String, dynamic> json) {
+  HafalanModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     if (json['data'] != null) {
-      data = <Datakesehatan>[];
+      data = <Datahafalan>[];
       json['data'].forEach((v) {
-        data!.add(new Datakesehatan.fromJson(v));
+        data!.add(new Datahafalan.fromJson(v));
       });
     }
   }
@@ -24,7 +24,7 @@ class KesehatanModel {
   }
 }
 
-class Datakesehatan {
+class Datahafalan {
   int? idSiswa;
   String? nis;
   String? nama;
@@ -55,10 +55,10 @@ class Datakesehatan {
   String? email;
   String? nohp;
   int? id;
-  String? kesehatan;
-  String? tglCheckup;
+  String? batasHafalan;
+  String? tglSetor;
 
-  Datakesehatan(
+  Datahafalan(
       {this.idSiswa,
       this.nis,
       this.nama,
@@ -89,10 +89,10 @@ class Datakesehatan {
       this.email,
       this.nohp,
       this.id,
-      this.kesehatan,
-      this.tglCheckup});
+      this.batasHafalan,
+      this.tglSetor});
 
-  Datakesehatan.fromJson(Map<String, dynamic> json) {
+  Datahafalan.fromJson(Map<String, dynamic> json) {
     idSiswa = json['id_siswa'];
     nis = json['nis'];
     nama = json['nama'];
@@ -123,8 +123,8 @@ class Datakesehatan {
     email = json['email'];
     nohp = json['nohp'];
     id = json['id'];
-    kesehatan = json['kesehatan'];
-    tglCheckup = json['tgl_checkup'];
+    batasHafalan = json['batas_hafalan'];
+    tglSetor = json['tgl_setor'];
   }
 
   Map<String, dynamic> toJson() {
@@ -159,8 +159,8 @@ class Datakesehatan {
     data['email'] = this.email;
     data['nohp'] = this.nohp;
     data['id'] = this.id;
-    data['kesehatan'] = this.kesehatan;
-    data['tgl_checkup'] = this.tglCheckup;
+    data['batas_hafalan'] = this.batasHafalan;
+    data['tgl_setor'] = this.tglSetor;
     return data;
   }
 }

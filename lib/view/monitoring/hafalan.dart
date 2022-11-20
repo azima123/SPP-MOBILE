@@ -2,30 +2,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spp/models/login/LoginModel.dart';
-import 'package:spp/models/monitoring/SppModel.dart';
-import 'package:spp/res/theme/colors/light_colors.dart';
-import 'package:spp/view_model/spp/SppVM.dart';
+import 'package:spp/models/monitoring/HafalanModel.dart';
+import 'package:spp/view_model/hafalan/HafalanVM.dart';
 
 import '../../data/remote/response/Status.dart';
-import '../../view_model/login/LoginVM.dart';
+import '../../res/theme/colors/light_colors.dart';
 import '../widget/LoadingWidget.dart';
 import '../widget/MyErrorWidget.dart';
 
-class spp extends StatefulWidget {
+class hafalan extends StatefulWidget {
   final anak;
-  const spp({Key? key, this.anak}) : super(key: key);
+  const hafalan({Key? key, this.anak}) : super(key: key);
 
   @override
-  State<spp> createState() => _spp();
+  State<hafalan> createState() => _hafalan();
 }
 
-class _spp extends State<spp> {
+class _hafalan extends State<hafalan> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Monitoring SPP"),
+        title: Text("Monitoring Hafalan"),
         backgroundColor: LightColors.Blue,
       ),
       body: _widgetbody(widget.anak),
@@ -46,7 +50,10 @@ class _spp extends State<spp> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailSPP(nis: item.nis!),
+            builder: (context) => DetailHafalan(
+                idkelas: item.idKelas!,
+                idsekolah: item.idSekolahsiswa!,
+                nis: item.nis),
           ),
         );
       },
@@ -69,17 +76,23 @@ class _spp extends State<spp> {
   }
 }
 
-class DetailSPP extends StatefulWidget {
-  final String nis;
-  const DetailSPP({Key? key, required this.nis}) : super(key: key);
+class DetailHafalan extends StatefulWidget {
+  final idsekolah;
+  final idkelas;
+  final nis;
+  const DetailHafalan({
+    Key? key,
+    this.idkelas,
+    this.idsekolah,
+    this.nis,
+  }) : super(key: key);
 
   @override
-  State<DetailSPP> createState() => _DetailSpp();
+  State<DetailHafalan> createState() => _detailhafalan();
 }
 
-class _DetailSpp extends State<DetailSPP> {
-  final SppVM viewModel = SppVM();
-
+class _detailhafalan extends State<DetailHafalan> {
+  HafalanVM viewmodel = HafalanVM();
   @override
   void initState() {
     getdata();
@@ -87,26 +100,27 @@ class _DetailSpp extends State<DetailSPP> {
   }
 
   getdata() async {
-    await viewModel.getlistpay(widget.nis);
+    await viewmodel.getlisthafalan(
+        widget.idkelas.toString(), widget.idsekolah.toString(), widget.nis);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text("Data Hafalan Siswa"),
         backgroundColor: LightColors.Blue,
-        title: Text("Pembayaran SPP"),
       ),
-      body: ChangeNotifierProvider<SppVM>(
-        create: (BuildContext context) => viewModel,
-        child: Consumer<SppVM>(builder: (context, viewModel, _) {
-          switch (viewModel.spp.status) {
+      body: ChangeNotifierProvider<HafalanVM>(
+        create: (BuildContext context) => viewmodel,
+        child: Consumer<HafalanVM>(builder: (context, viewModel, _) {
+          switch (viewModel.hafalan.status) {
             case Status.LOADING:
               return LoadingWidget();
             case Status.ERROR:
-              return MyErrorWidget(viewModel.spp.message ?? "NA");
+              return MyErrorWidget(viewModel.hafalan.message ?? "NA");
             case Status.COMPLETED:
-              return getData(viewModel.spp.data!.data!);
+              return getDatalist(viewModel.hafalan.data!.data!);
             default:
           }
           return Container();
@@ -115,27 +129,24 @@ class _DetailSpp extends State<DetailSPP> {
     );
   }
 
-  Widget getData(List<Dataspp> list) {
+  Widget getDatalist(List<Datahafalan> list) {
     return ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, position) {
-          return _getPaytItem(list[position]);
+          return _getlistItem(list[position]);
         });
   }
-}
 
-Widget _getPaytItem(Dataspp item) {
-  return Card(
-      margin: EdgeInsets.only(top: 2),
-      child: ListTile(
-        title: Text(item.bulan!),
-        subtitle: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Pembayaran : " + item.bayar!),
-            Text("Status: " + item.status!)
-          ],
-        ),
-      ));
+  Widget _getlistItem(Datahafalan item) {
+    return Card(
+        margin: EdgeInsets.only(top: 2),
+        child: ListTile(
+          title: Text(item.batasHafalan!),
+          subtitle: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text("Tgl Setor : " + item.tglSetor!)],
+          ),
+        ));
+  }
 }

@@ -5,4 +5,5 @@ class ApiEndPoints {
   final String gethealth = "gethealth";
   final String gethafalan = "gethafalan";
   final String getinfospp = "getinfospp";
+  final String updateaccount = "updateaccount";
 }

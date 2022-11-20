@@ -17,7 +17,6 @@ enum LoginStatus { notSignIn, signIn }
 class _loginstate extends State<login> {
   @override
   initState() {
-    checksession();
     super.initState();
   }
 
@@ -48,9 +47,9 @@ class _loginstate extends State<login> {
   }
 
   savepref(int? id) async {
-    await SessionManager()
-        .set("id", id)
-        .then((value) => {Navigator.pushNamed(context, "home")});
+    await SessionManager().set("id", id).then((value) =>
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => home())));
   }
 
   Widget _buildTextField({
@@ -343,14 +342,8 @@ class _loginstate extends State<login> {
   }
 
   Future<void> checksession() async {
-    dynamic id = await SessionManager().get("id");
-    if (id != null) {
-      Navigator.pushReplacement<void, void>(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => home(),
-        ),
-      );
-    }
+    dynamic id = await SessionManager().get("id").then((value) =>
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (BuildContext context) => home())));
   }
 }
