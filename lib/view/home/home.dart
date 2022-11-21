@@ -287,47 +287,39 @@ class _home extends State<home> {
                       children: <Widget>[
                         subheading('Fitur Aplikasi'),
                         SizedBox(height: 5.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            GestureDetector(
-                                onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => spp(
-                                            anak: viewModel.login.data!.anak),
-                                      ),
-                                    ),
-                                child: Container(
-                                    width: 160,
-                                    child: ActiveProjectsCard(
-                                      cardColor: LightColors.kGreen,
-                                      loadingPercent: 0.25,
-                                      title: 'SPP',
-                                      subtitle:
-                                          'Monitoring Pembayaran SPP anak',
-                                      icon: Icons.money_sharp,
-                                    ))),
-                            SizedBox(width: 20.0),
-                            GestureDetector(
-                                onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => health(
-                                            anak: viewModel.login.data!.anak),
-                                      ),
-                                    ),
-                                child: Container(
-                                    width: 160,
-                                    child: ActiveProjectsCard(
-                                      cardColor: LightColors.kRed,
-                                      loadingPercent: 0.6,
-                                      title: 'Kesehatan',
-                                      subtitle: 'Monitoring Kesehatan anak',
-                                      icon: Icons.health_and_safety,
-                                    )))
-                          ],
-                        ),
+                        GestureDetector(
+                            onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        spp(anak: viewModel.login.data!.anak),
+                                  ),
+                                ),
+                            child: Container(
+                                child: ActiveProjectsCard(
+                              cardColor: LightColors.kGreen,
+                              loadingPercent: 0.25,
+                              title: 'SPP',
+                              subtitle: 'Monitoring Pembayaran SPP anak',
+                              icon: Icons.money_sharp,
+                            ))),
+                        SizedBox(width: 20.0),
+                        GestureDetector(
+                            onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => health(
+                                        anak: viewModel.login.data!.anak),
+                                  ),
+                                ),
+                            child: Container(
+                                child: ActiveProjectsCard(
+                              cardColor: LightColors.kRed,
+                              loadingPercent: 0.6,
+                              title: 'Kesehatan',
+                              subtitle: 'Monitoring Kesehatan anak',
+                              icon: Icons.health_and_safety,
+                            )))
                       ],
                     ),
                   ),

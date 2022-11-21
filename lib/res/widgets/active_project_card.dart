@@ -23,7 +23,6 @@ class ActiveProjectsCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 10.0),
         padding: EdgeInsets.all(15.0),
-        height: 200,
         decoration: BoxDecoration(
           color: cardColor,
           borderRadius: BorderRadius.circular(40.0),
