@@ -30,13 +30,13 @@ class LoginModel {
 }
 
 class Data {
-  int? id;
+  String? id;
   String? nama;
   String? nohp;
   String? alamat;
   String? email;
   String? foto;
-  int? idSekolah;
+  String? idSekolah;
   String? password;
   String? createdAt;
   String? updatedAt;
@@ -77,7 +77,7 @@ class Data {
     data['alamat'] = this.alamat;
     data['email'] = this.email;
     data['foto'] = this.foto;
-    data['id_sekolah'] = this.idSekolah;
+    data['id_sekolah'] = this.idSekolah.toString();
     data['password'] = this.password;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
@@ -87,18 +87,18 @@ class Data {
 }
 
 class Anak {
-  int? idSiswa;
+  String? idSiswa;
   String? nis;
   String? nama;
   String? tptLahir;
   String? tglLahir;
-  int? idKelas;
+  String? idKelas;
   String? namaIbu;
   String? foto;
   String? alamat;
   String? kelas;
-  int? idSekolahsiswa;
-  int? idtahunmasuksiswa;
+  String? idSekolahsiswa;
+  String? idtahunmasuksiswa;
   String? statussiswa;
   String? createdAt;
   String? updatedAt;

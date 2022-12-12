@@ -33,19 +33,6 @@ class ActiveProjectsCard extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: CircularPercentIndicator(
-                animation: true,
-                radius: 30.0,
-                percent: loadingPercent,
-                lineWidth: 5.0,
-                circularStrokeCap: CircularStrokeCap.round,
-                backgroundColor: Color.fromARGB(255, 255, 184, 71),
-                progressColor: Colors.white,
-                center: Icon(
-                  icon,
-                  color: Colors.white,
-                ),
-              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +42,7 @@ class ActiveProjectsCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
@@ -63,7 +50,6 @@ class ActiveProjectsCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 13.0,
                     color: Color.fromARGB(255, 239, 239, 239),
-                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],

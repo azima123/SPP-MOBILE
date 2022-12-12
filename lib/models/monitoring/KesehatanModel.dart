@@ -25,23 +25,23 @@ class KesehatanModel {
 }
 
 class Datakesehatan {
-  int? idSiswa;
+  String? idSiswa;
   String? nis;
   String? nama;
   String? tptLahir;
   String? tglLahir;
-  int? idKelas;
+  String? idKelas;
   String? namaIbu;
   String? foto;
   String? alamat;
-  int? idSekolahsiswa;
-  int? idtahunmasuksiswa;
+  String? idSekolahsiswa;
+  String? idtahunmasuksiswa;
   String? statussiswa;
   String? createdAt;
   String? updatedAt;
   String? kelas;
-  int? idSekolahkelas;
-  int? idSekolah;
+  String? idSekolahkelas;
+  String? idSekolah;
   String? nmSekolah;
   String? alSekolah;
   String? kecamatan;
@@ -54,7 +54,7 @@ class Datakesehatan {
   String? website;
   String? email;
   String? nohp;
-  int? id;
+  String? id;
   String? kesehatan;
   String? tglCheckup;
 
@@ -88,7 +88,8 @@ class Datakesehatan {
       this.website,
       this.email,
       this.nohp,
-      this.id,
+
+      ///this.id,
       this.kesehatan,
       this.tglCheckup});
 
@@ -122,7 +123,7 @@ class Datakesehatan {
     website = json['website'];
     email = json['email'];
     nohp = json['nohp'];
-    id = json['id'];
+    //id = json['id'];
     kesehatan = json['kesehatan'];
     tglCheckup = json['tgl_checkup'];
   }
@@ -158,7 +159,7 @@ class Datakesehatan {
     data['website'] = this.website;
     data['email'] = this.email;
     data['nohp'] = this.nohp;
-    data['id'] = this.id;
+    //data['id'] = this.id;
     data['kesehatan'] = this.kesehatan;
     data['tgl_checkup'] = this.tglCheckup;
     return data;

@@ -23,7 +23,11 @@ class NetworkApiService extends BaseApiService {
   Future postResponse(String url, data) async {
     dynamic responseJson;
     try {
-      final response = await http.post(Uri.parse(baseUrl + url), body: data);
+      final response = await http.post(Uri.parse(baseUrl + url),
+          headers: {
+            "content-type": "application/json",
+          },
+          body: jsonEncode(data));
       responseJson = returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet Connection');

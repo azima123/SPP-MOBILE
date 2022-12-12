@@ -283,43 +283,97 @@ class _home extends State<home> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         subheading('Fitur Aplikasi'),
                         SizedBox(height: 5.0),
-                        GestureDetector(
-                            onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        spp(anak: viewModel.login.data!.anak),
-                                  ),
-                                ),
-                            child: Container(
-                                child: ActiveProjectsCard(
-                              cardColor: LightColors.kGreen,
-                              loadingPercent: 0.25,
-                              title: 'SPP',
-                              subtitle: 'Monitoring Pembayaran SPP anak',
-                              icon: Icons.money_sharp,
-                            ))),
-                        SizedBox(width: 20.0),
-                        GestureDetector(
-                            onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => health(
-                                        anak: viewModel.login.data!.anak),
-                                  ),
-                                ),
-                            child: Container(
-                                child: ActiveProjectsCard(
-                              cardColor: LightColors.kRed,
-                              loadingPercent: 0.6,
-                              title: 'Kesehatan',
-                              subtitle: 'Monitoring Kesehatan anak',
-                              icon: Icons.health_and_safety,
-                            )))
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                                onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => spp(
+                                            anak: viewModel.login.data!.anak),
+                                      ),
+                                    ),
+                                child: Container(
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: Colors.white70, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      elevation: 1,
+                                      shadowColor: Colors.black,
+                                      color: Color.fromARGB(255, 1, 115, 222),
+                                      child: SizedBox(
+                                          width: 150,
+                                          height: 150,
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: Column(children: [
+                                                Icon(
+                                                  Icons.money,
+                                                  size: 50,
+                                                  color: Colors.white,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text("Monitoring SPP Anak",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.white)),
+                                              ])))),
+                                )),
+                            GestureDetector(
+                                onTap: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => health(
+                                            anak: viewModel.login.data!.anak),
+                                      ),
+                                    ),
+                                child: Container(
+                                  child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        side: BorderSide(
+                                            color: Colors.white70, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      elevation: 1,
+                                      shadowColor: Colors.black,
+                                      color: Color.fromARGB(255, 222, 1, 97),
+                                      child: SizedBox(
+                                          width: 150,
+                                          height: 150,
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(20.0),
+                                              child: Column(children: [
+                                                Icon(
+                                                  Icons.medical_information,
+                                                  size: 50,
+                                                  color: Colors.white,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                    "Monitoring Kesehatan Anak",
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.white)),
+                                              ])))),
+                                ))
+                          ],
+                        ),
                       ],
                     ),
                   ),

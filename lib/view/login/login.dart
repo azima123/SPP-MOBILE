@@ -38,7 +38,18 @@ class _loginstate extends State<login> {
     await viewModel.actlogin(email!, password!);
     switch (viewModel.login.status) {
       case Status.COMPLETED:
-        savepref(viewModel.login.data!.data!.id);
+        try {
+          viewModel.login.data!.data!.id;
+          savepref(viewModel.login.data!.data!.id);
+        } catch (_) {
+          // <-- removing the on Exception clause
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Akun tidak tersedia'),
+            ),
+          );
+          throw Exception("Error on server");
+        }
 
         break;
       default:
@@ -46,7 +57,7 @@ class _loginstate extends State<login> {
     }
   }
 
-  savepref(int? id) async {
+  savepref(String? id) async {
     await SessionManager().set("id", id).then((value) =>
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (BuildContext context) => home())));

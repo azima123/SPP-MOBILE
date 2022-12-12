@@ -25,23 +25,23 @@ class HafalanModel {
 }
 
 class Datahafalan {
-  int? idSiswa;
+  String? idSiswa;
   String? nis;
   String? nama;
   String? tptLahir;
   String? tglLahir;
-  int? idKelas;
+  String? idKelas;
   String? namaIbu;
   String? foto;
   String? alamat;
-  int? idSekolahsiswa;
-  int? idtahunmasuksiswa;
+  String? idSekolahsiswa;
+  String? idtahunmasuksiswa;
   String? statussiswa;
   String? createdAt;
   String? updatedAt;
   String? kelas;
-  int? idSekolahkelas;
-  int? idSekolah;
+  String? idSekolahkelas;
+  String? idSekolah;
   String? nmSekolah;
   String? alSekolah;
   String? kecamatan;
@@ -54,7 +54,7 @@ class Datahafalan {
   String? website;
   String? email;
   String? nohp;
-  int? id;
+  //int? id;
   String? batasHafalan;
   String? tglSetor;
 
@@ -88,7 +88,7 @@ class Datahafalan {
       this.website,
       this.email,
       this.nohp,
-      this.id,
+      //this.id,
       this.batasHafalan,
       this.tglSetor});
 
@@ -122,7 +122,7 @@ class Datahafalan {
     website = json['website'];
     email = json['email'];
     nohp = json['nohp'];
-    id = json['id'];
+    //id = json['id'];
     batasHafalan = json['batas_hafalan'];
     tglSetor = json['tgl_setor'];
   }
@@ -158,7 +158,7 @@ class Datahafalan {
     data['website'] = this.website;
     data['email'] = this.email;
     data['nohp'] = this.nohp;
-    data['id'] = this.id;
+    //data['id'] = this.id;
     data['batas_hafalan'] = this.batasHafalan;
     data['tgl_setor'] = this.tglSetor;
     return data;
